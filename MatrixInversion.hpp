@@ -3,11 +3,11 @@ using namespace std;
 void printMatrix(const vector<vector<double>>& matrix) {
     for (const auto& row : matrix) {
         for (double val : row) {
-            cout << setw(10) << setprecision(4) << val << " ";
+            printf("%.6lf ", val);
         }
-        cout << endl;
+        puts("");
     }
-    cout << endl;
+    puts("");
 }
 vector<vector<double>> invertMatrix(const vector<vector<double>>& matrix) {
     int n = matrix.size();
