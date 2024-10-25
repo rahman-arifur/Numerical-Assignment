@@ -1,5 +1,5 @@
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 const double tolerance = 1e-5;
 
 double getval(double x, vector<double>& a) {
@@ -20,12 +20,14 @@ double fprimex(double x, vector<double>& a) {
     return res;
 }
 
-void bisection(vector<double>& a) {
+void bisection(vector<double> a, double left, double right) {
     int n = size(a) - 1;
-    double val = pow(a[n-1] / a[n], 2) - 2 * a[n - 2] / a[n]; 
-    val = fabs(val);
-    double left = sqrt(val), right = -left, c;
-    int iterations = 1000;
+    if (getval(left, a) * getval(right, a) >= 0) {
+        cout << "Enter 2 valid values such that f(a) * f(b) < 0\n";
+        return;
+    }
+    double c;
+    int iterations = 100;
     while (fabs(left - right) > tolerance and --iterations) {
         c = (left + right) / 2;
         double fc = getval(c, a), fa = getval(left, a);
@@ -33,5 +35,24 @@ void bisection(vector<double>& a) {
         else if (fa * fc < 0) right = c;
         else left = c;
     }
-    printf("%.6lf\n", c);
+    printf("x = %.6lf\n", c);
+}
+
+double getnext(double x1, double x2, vector<double>& a) {
+    return (x1 * getval(x2, a) - x2 * getval(x1, a)) / (getval(x2, a) - getval(x1, a));
+}
+void falsePosition(vector<double> a, double left, double right) {
+    double c;
+    int it = 100;
+    if (getval(left, a) * getval(right, a) >= 0) {
+        cout << "Enter 2 valid values such that f(a) * f(b) < 0\n";
+        return;
+    }
+    while(it-- and getval(c, a) <= tolerance) {
+        c = getnext(left, right, a);
+        if (getval(c, a) == 0) break;
+        if (getval(left, a) * getval(c, a) < 0) right = c;
+        else left = c;
+    }
+    printf("x = %.6lf\n", c);
 }
