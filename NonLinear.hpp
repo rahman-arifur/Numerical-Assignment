@@ -65,7 +65,6 @@ void secant(vector<double> a) {
     //     cout << "Secant method cannot be applied for " << x1 << " and " << x2 << '\n';
     //     return;
     // }
-
     int it = 100;
     while (it--) {
         double fx1 = getval(x1, a), fx2 = getval(x2, a);
