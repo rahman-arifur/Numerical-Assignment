@@ -56,3 +56,24 @@ void falsePosition(vector<double> a, double left, double right) {
     }
     printf("x = %.6lf\n", c);
 }
+void secant(vector<double> a) {
+    double x1, x2, x3;
+    cout << "Two initial guess range: ";
+    cin >> x1 >> x2;
+
+    // if (getval(x1, a) * getval(x2, a) >= 0) {
+    //     cout << "Secant method cannot be applied for " << x1 << " and " << x2 << '\n';
+    //     return;
+    // }
+
+    int it = 100;
+    while (it--) {
+        double fx1 = getval(x1, a), fx2 = getval(x2, a);
+        x3 = fx2 * (x2 - x1) / (fx2 - fx1);
+        x3 = x2 - x3;
+        if (fabs(getval(x3, a)) <= tolerance) break;
+        x1 = x2;
+        x2 = x3;
+    }
+    printf("x = %.6lf\n", x3);
+}
