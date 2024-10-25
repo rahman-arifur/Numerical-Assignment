@@ -76,3 +76,22 @@ void secant(vector<double> a) {
     }
     printf("x = %.6lf\n", x3);
 }
+void newtonRaphson(vector<double> a) {
+    double x0, x1, ini;
+    cout << "Beginning value: ";
+    cin >> x0;
+    ini = x0;
+    int it = 100;
+    while (it--) {
+        double k = fprimex(x0, a);
+        if (k == 0) {
+            cout << "Can't solve with initial value = " << ini << "\n";
+            return;
+        }
+        x1 = x0 - getval(x0, a) / k;
+        if (abs(x1 - x0) < tolerance)
+            break;
+        x0 = x1;
+    }
+    printf("x = %.6lf\n", x1);
+}
