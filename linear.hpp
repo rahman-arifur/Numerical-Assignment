@@ -72,3 +72,36 @@ vector<double> gaussElimination(vector<vector<double>> matrix) {
 
     return solution;
 }
+
+vector<double> gaussJordanElimination(vector<vector<double>>& matrix) {
+	int n = size(matrix);
+    for (int i = 0; i < n; i++) {
+        // Make the diagonal element 1
+        double diag = matrix[i][i];
+        if (diag == 0) {
+            cout << "Matrix is singular and cannot be solved using Gauss-Jordan Elimination." << endl;
+            return {}; // Return empty vector if there's no unique solution
+        }
+        for (int j = 0; j <= n; j++) {
+            matrix[i][j] /= diag;
+        }
+
+        // Make all other elements in the current column 0
+        for (int k = 0; k < n; k++) {
+            if (k != i) {
+                double factor = matrix[k][i];
+                for (int j = 0; j <= n; j++) {
+                    matrix[k][j] -= factor * matrix[i][j];
+                }
+            }
+        }
+    }
+
+    // Extract solutions from the last column
+    vector<double> solution(n);
+    for (int i = 0; i < n; i++) {
+        solution[i] = matrix[i][n];
+    }
+
+    return solution;
+}
