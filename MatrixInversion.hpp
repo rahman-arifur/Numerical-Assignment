@@ -9,7 +9,7 @@ void printMatrix(const vector<vector<double>>& matrix) {
     }
     puts("");
 }
-vector<vector<double>> invertMatrix(const vector<vector<double>>& matrix) {
+vector<vector<double>> invertMatrix(vector<vector<double>> matrix) {
     int n = matrix.size();
     vector<vector<double>> augmented(n, vector<double>(2 * n));
     for (int i = 0; i < n; ++i) {
@@ -21,9 +21,9 @@ vector<vector<double>> invertMatrix(const vector<vector<double>>& matrix) {
     for (int i = 0; i < n; ++i) {
         double pivot = augmented[i][i];
 
-        if (fabs(pivot) < 1e-10) {
+        if (fabs(pivot) < 1e-6) {
             for (int row = i + 1; row < n; ++row) {
-                if (fabs(augmented[row][i]) > 1e-10) {
+                if (fabs(augmented[row][i]) > 1e-6) {
                     swap(augmented[i], augmented[row]);
                     pivot = augmented[i][i];
                     break;
@@ -31,7 +31,7 @@ vector<vector<double>> invertMatrix(const vector<vector<double>>& matrix) {
             }
         }
 
-        if (fabs(pivot) < 1e-10) {
+        if (fabs(pivot) < 1e-6) {
             throw runtime_error("Matrix is singular and cannot be inverted.");
         }
         for (int j = 0; j < 2 * n; ++j) {
