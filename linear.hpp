@@ -1,14 +1,60 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 const double tolerance = 1e-5;
-void jacobian(vector<vector<double>>& A, vector<double>& b, int maxIterations = 100) {
+bool makeDiagonallyDominant(vector<vector<double>>& A, vector<double>& b) {
     int n = A.size();
-    vector<double> x(n, 0.0);  
+    vector<int> used(n, 0); // To track if a row has been used in reordering
+
+    for (int i = 0; i < n; ++i) {
+        int maxRow = -1;
+        double maxValue = 0.0;
+
+        // Find the row with the largest absolute value in the current column
+        for (int k = 0; k < n; ++k) {
+            if (!used[k] && fabs(A[k][i]) > maxValue) {
+                maxValue = fabs(A[k][i]);
+                maxRow = k;
+            }
+        }
+
+        // If no suitable row found, return false (cannot make it diagonally dominant)
+        if (maxRow == -1 || maxValue == 0) {
+            return false;
+        }
+
+        // Swap rows if maxRow is not the current row
+        if (maxRow != i) {
+            swap(A[i], A[maxRow]);
+            swap(b[i], b[maxRow]);
+        }
+
+        // Mark the row as used
+        used[maxRow] = 1;
+    }
+
+    // Verify if it is now diagonally dominant
+    for (int i = 0; i < n; ++i) {
+        double rowSum = 0.0;
+        for (int j = 0; j < n; ++j) {
+            if (i != j) rowSum += fabs(A[i][j]);
+        }
+        if (fabs(A[i][i]) <= rowSum) {
+            return false; // Not diagonally dominant
+        }
+    }
+    return true; // Successfully made it diagonally dominant
+}
+
+void jacobian(vector<vector<double>> &A, vector<double> &b, int maxIterations = 100) {
+    int n = A.size();
+    vector<double> x(n, 0.0);
     vector<double> x_new(n, 0.0);
 
+    if (!makeDiagonallyDominant(A, b)) {
+        cout << "Matrix cannot be made diagonally dominant. Jacobi method may not converge.\n";
+        return;
+    }
+
     for (int iteration = 0; iteration < maxIterations; ++iteration) {
-       
+
         for (int i = 0; i < n; ++i) {
             double sum = 0.0;
             for (int j = 0; j < n; ++j) {
@@ -17,7 +63,7 @@ void jacobian(vector<vector<double>>& A, vector<double>& b, int maxIterations = 
             }
             x_new[i] = (b[i] - sum) / A[i][i];
         }
- bool converged = true;
+        bool converged = true;
         for (int i = 0; i < n; ++i) {
             if (fabs(x_new[i] - x[i]) > tolerance) {
                 converged = false;
@@ -25,7 +71,7 @@ void jacobian(vector<vector<double>>& A, vector<double>& b, int maxIterations = 
             }
         }
         x = x_new;
-if (converged) {
+        if (converged) {
             cout << "Converged in " << iteration + 1 << " iterations.\n";
             break;
         }
@@ -34,43 +80,6 @@ if (converged) {
     for (int i = 0; i < n; ++i) {
         printf("x[%d] = %.6lf\n", i, x[i]);
     }
-}
-vector<double> gaussElimination(vector<vector<double>> matrix) {
-	int n = size(matrix);
-    // Forward elimination process
-    for (int i = 0; i < n - 1; i++) {
-        // Pivoting: find the row with the maximum element in the current column
-        int maxRow = i;
-        for (int k = i + 1; k < n; k++) {
-            if (fabs(matrix[k][i]) > fabs(matrix[maxRow][i])) {
-                maxRow = k;
-            }
-        }
-
-        // Swap the rows if needed
-        if (maxRow != i) {
-            swap(matrix[i], matrix[maxRow]);
-        }
-
-        // Eliminate entries below the pivot
-        for (int k = i + 1; k < n; k++) {
-            double factor = matrix[k][i] / matrix[i][i];
-            for (int j = i; j <= n; j++) {
-                matrix[k][j] -= factor * matrix[i][j];
-            }
-        }
-    }
-
-    // Back substitution process
-    vector<double> solution(n);
-    for (int i = n - 1; i >= 0; i--) {
-        solution[i] = matrix[i][n] / matrix[i][i];
-        for (int j = i - 1; j >= 0; j--) {
-            matrix[j][n] -= matrix[j][i] * solution[i];
-        }
-    }
-
-    return solution;
 }
 
 vector<double> gaussJordanElimination(vector<vector<double>>& matrix) {
