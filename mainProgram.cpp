@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include "jacobi_gauss.hpp"
 #include "NonLinear.hpp"
+#include "linear.hpp"
 int main() {
     int type = 0;
     do {
@@ -37,9 +37,9 @@ int main() {
         else if (type == 2) {
             cout << "Max power of variable: ";
             int n; cin >> n;
-            vector<double> a(n + 1);
+            vector<double> A(n + 1);
             cout << "input in the form anx^n + a(n-1)x^(n-1) + ... + a1x + a0 = 0\n";
-            for (int i = n; i >= 0; i--) cin >> a[i];
+            for (int i = n; i >= 0; i--) cin >> A[i];
             cout << "\na. Bi-section Method\nb. False Position Method\nc. Secant Method\nd. Newton-Raphson Method\n";
             cout << "Select the method: ";
             char c; cin >> c;
@@ -47,8 +47,23 @@ int main() {
                 double a, b;
                 cout << "Enter interval (a, b): ";
                 cin >> a >> b;
-
+                if (c == 'a') {
+                    cout << "Bi-section Method solution: \n";
+                    bisection(A, a, b);
+                } else {
+                    cout << "False Position Method solution: \n";
+                    falsePosition(A, a, b);
+                }
             }
+            else if (c == 'c') {
+                cout << "Secant Method solution:\n";
+                secant(A);
+            }
+            else if (c == 'd') {
+                cout << "Newton-Raphson Method solution:\n";
+                newtonRaphson(A);
+            }
+            else cout << "please enter a valid choice.\n";
         }
         else if (type == 3) {
 
@@ -57,6 +72,7 @@ int main() {
 
         }
         else type = 0;
+        cout << '\n';
     } while (type);
     return 0;
 }
