@@ -23,7 +23,7 @@ int main() {
                 B.push_back(matrix[i].back());
             }
             cout << "Solution of Linear Equations: \n\n";
-            cout << "a. Jacobi iterative method\nb. Gauss-Seidel iterative method\nc. Gauss elimination\nd. Gausss-Jordan elimination\ne. LU factorization";
+            cout << "a. Jacobi iterative method\nb. Gauss-Seidel iterative method\nc. Gauss elimination\nd. Gausss-Jordan elimination\ne. LU factorization\n";
             char c; cin >> c;
             if (c == 'a') {
                 jacobian(matrix, B);
