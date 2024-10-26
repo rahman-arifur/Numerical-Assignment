@@ -1,4 +1,4 @@
-const double tolerance = 1e-5;
+// const double tolerance = 1e-5;
 bool makeDiagonallyDominant(vector<vector<double>>& A, vector<double>& b) {
     int n = A.size();
     vector<int> used(n, 0); // To track if a row has been used in reordering
