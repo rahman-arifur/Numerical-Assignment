@@ -1,6 +1,6 @@
 // #include <bits/stdc++.h>
 // using namespace std;
-const double tolerance = 1e-5;
+
 
 double getval(double x, vector<double>& a) {
     double res = 0, xx = 1;
