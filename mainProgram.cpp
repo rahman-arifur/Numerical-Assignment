@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+const double tolerance = 1e-6;
 #include "NonLinear.hpp"
 #include "linear.hpp"
 #include "MatrixInversion.hpp"
