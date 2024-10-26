@@ -73,7 +73,7 @@ Compile and Run mainProgram.cpp file
     If f(c) is close to zero, return c
     Else if f(a) * f(c) < 0, set b = c
     Else set a = c
-   ``
+   ```
 - **False Position Method**: Combines the bisection and secant methods, selecting points based on function values to find roots.
    ```
    Repeat until convergence:
@@ -81,7 +81,7 @@ Compile and Run mainProgram.cpp file
     If f(c) is close to zero, return c
     Else if f(a) * f(c) < 0, set b = c
     Else set a = c
-   ``
+   ```
 - **Secant Method**: Uses two initial points to approximate roots, improving efficiency compared to the bisection method.
    ```
    Repeat until convergence:
