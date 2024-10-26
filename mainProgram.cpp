@@ -117,7 +117,7 @@ int main() {
                 cin >> p >> q >> a >> b;
                 params = {p, q, a, b};
             } else {
-                cout << "Invalid choice!";
+                cout << "Invalid choice!"; break;
             }
 
             // Select the equation and solve it
