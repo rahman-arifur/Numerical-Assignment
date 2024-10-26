@@ -196,3 +196,29 @@ vector<double> gaussElimination(vector<vector<double>> matrix) {
 
     return solution;
 }
+vector<double> gaussSeidel(vector<vector<double>>& A, vector<double>& b) {
+    int n = A.size(), maxIterations = 100;
+
+    if (!makeDiagonallyDominant(A, b)) {
+        cout << "Matrix cannot be made diagonally dominant. GaussSeidel method may not converge.\n";
+        return {};
+    }
+
+    vector<double> x(n, 0);
+    for (int k = 0; k < maxIterations; ++k) {
+        vector<double> x_old = x;
+        bool ok = true;
+        for (int i = 0; i < n; ++i) {
+            double sigma = 0;
+            for (int j = 0; j < n; ++j) {
+                if (j != i) {
+                    sigma += A[i][j] * x[j];
+                }
+            }
+            x[i] = (b[i] - sigma) / A[i][i];
+            ok &= (fabs(x[i] - x_old[i]) <= tolerance);
+        }
+        if (ok) break;
+    }
+    return x;
+}
