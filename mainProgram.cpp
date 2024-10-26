@@ -29,7 +29,11 @@ int main() {
                 jacobian(matrix, B);
             }
             else if (c == 'b') {
-
+                auto x = gaussSeidel(matrix, B);
+                if (size(x)) cout << "Solution:\n";
+                for (int i = 0; i < size(x); ++i) {
+                    printf("x[%d] = %.6lf\n", i, x[i]);
+                }
             }
             else if (c == 'c') {
                 auto x = gaussElimination(matrix);
