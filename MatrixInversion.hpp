@@ -1,5 +1,5 @@
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 void printMatrix(const vector<vector<double>>& matrix) {
     for (const auto& row : matrix) {
         for (double val : row) {
